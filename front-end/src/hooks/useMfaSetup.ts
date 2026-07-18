@@ -67,7 +67,7 @@ export function useMfaSetup(): UseMfaSetupReturn {
     } finally {
       setActivating(false)
     }
-  }, [code])
+  }, [code, setMfaEnabled])
 
   return {
     qrCodeUrl,
