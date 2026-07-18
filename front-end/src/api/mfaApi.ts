@@ -46,6 +46,18 @@ export async function enableMfa(code: string): Promise<void> {
   await apiClient.post('/mfa/enable', { code })
 }
 
+/**
+ * Desativa o MFA do usuário atual. Ação crítica: exige um código TOTP válido
+ * enviado no header x-mfa-code (step-up), igual à exclusão de clientes.
+ * POST /mfa/disable
+ * @throws AxiosError 401 com code MFA_REQUIRED | MFA_INVALID
+ */
+export async function disableMfa(code: string): Promise<void> {
+  await apiClient.post('/mfa/disable', null, {
+    headers: { 'x-mfa-code': code },
+  })
+}
+
 // Helper para simular latência de rede
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))

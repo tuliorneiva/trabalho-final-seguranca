@@ -85,3 +85,28 @@
   color: var(--color-text-secondary);
   line-height: 1.6;
 }
+
+.disableBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  background: rgba(239, 68, 68, 0.08);
+  color: #f87171;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.disableBtn:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.16);
+}
+
+.disableBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
