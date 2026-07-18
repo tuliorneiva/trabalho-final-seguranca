@@ -1,0 +1,184 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 640px;
+}
+
+/* Passo */
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  transition: opacity var(--transition-normal);
+}
+
+.stepDisabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.stepHeader {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.stepNumber {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  color: #fff;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px var(--color-primary-glow);
+}
+
+.stepTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.2px;
+  margin-bottom: var(--space-1);
+}
+
+.stepDesc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.generateBtn {
+  align-self: flex-start;
+}
+
+/* Loading */
+.spinnerWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6) 0;
+}
+
+.loadingText {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* QR Section */
+.qrSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  animation: fadeIn 0.4s ease both;
+}
+
+.qrWrapper {
+  padding: var(--space-5);
+  background: rgba(241, 240, 255, 0.05);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  display: inline-block;
+  box-shadow: var(--shadow-glow);
+}
+
+.secretBox {
+  width: 100%;
+  padding: var(--space-4);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.secretLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.secretCode {
+  font-family: 'Courier New', monospace;
+  font-size: var(--font-size-md);
+  color: var(--color-primary-light);
+  font-weight: 700;
+  letter-spacing: 3px;
+  word-break: break-all;
+  text-align: center;
+}
+
+.regenBtn {
+  font-size: var(--font-size-xs);
+}
+
+/* Activate form */
+.activateForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.inputWrapper {
+  width: 100%;
+}
+
+.codeInput {
+  text-align: center !important;
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  letter-spacing: 16px !important;
+  padding: var(--space-4) !important;
+}
+
+/* Erro */
+.errorMsg {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-danger);
+  font-weight: 500;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-danger-bg);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: var(--radius-md);
+}
+
+/* Sucesso */
+.successMsg {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  background: var(--color-success-bg);
+  border: 1px solid rgba(16,185,129,0.2);
+  border-radius: var(--radius-md);
+  color: var(--color-success);
+  animation: fadeIn 0.35s ease both;
+}
+
+.successMsg strong {
+  display: block;
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  margin-bottom: var(--space-1);
+}
+
+.successMsg p {
+  font-size: var(--font-size-sm);
+  opacity: 0.85;
+}

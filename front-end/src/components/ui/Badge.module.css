@@ -1,0 +1,42 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Ativo — verde */
+.ativo {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+.ativo .dot { background: var(--color-success); }
+
+/* Inativo — cinza */
+.inativo {
+  background: rgba(107, 101, 144, 0.15);
+  color: var(--color-text-muted);
+  border: 1px solid rgba(107, 101, 144, 0.2);
+}
+.inativo .dot { background: var(--color-text-muted); }
+
+/* Pendente — amarelo */
+.pendente {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+.pendente .dot { background: var(--color-warning); }
