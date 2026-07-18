@@ -12,4 +12,8 @@ describe('CryptoService', () => {
   it('uses a random IV so ciphertext differs each call', () => {
     expect(svc.encrypt('same-value')).not.toBe(svc.encrypt('same-value'))
   })
+
+  it('throws on malformed encrypted payload', () => {
+    expect(() => svc.decrypt('malformed-value')).toThrow('Formato de payload criptografado inválido.')
+  })
 })

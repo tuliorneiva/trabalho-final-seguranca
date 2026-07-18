@@ -21,6 +21,9 @@ export class CryptoService {
 
   decrypt(payload: string): string {
     const [ivHex, tagHex, dataHex] = payload.split(':')
+    if (!ivHex || !tagHex || !dataHex) {
+      throw new Error('Formato de payload criptografado inválido.')
+    }
     const decipher = createDecipheriv('aes-256-gcm', this.key, Buffer.from(ivHex, 'hex'))
     decipher.setAuthTag(Buffer.from(tagHex, 'hex'))
     const plain = Buffer.concat([decipher.update(Buffer.from(dataHex, 'hex')), decipher.final()])
