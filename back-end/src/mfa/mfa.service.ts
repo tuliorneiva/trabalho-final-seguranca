@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
+import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { User } from '../auth/entities/user.entity'
@@ -14,6 +14,9 @@ export class MfaService {
   ) {}
 
   async generate(user: User) {
+    if (user.isMfaEnabled) {
+      throw new ForbiddenException('MFA já está ativo para este usuário.')
+    }
     const secret = this.totp.generateSecret()
     user.totpSecret = this.crypto.encrypt(secret)
     await this.users.save(user)

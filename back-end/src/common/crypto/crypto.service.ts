@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common'
 import { createCipheriv, createDecipheriv, createHash, randomBytes } from 'crypto'
+import { requireSecret } from '../config/secrets'
 
 @Injectable()
 export class CryptoService {
   private readonly key: Buffer
 
   constructor() {
-    const secret = process.env.MFA_ENC_KEY ?? 'dev-insecure-key-change-me'
+    const secret = requireSecret('MFA_ENC_KEY', 'test-insecure-mfa-key')
     // Deriva uma chave de 32 bytes a partir de qualquer segredo.
     this.key = createHash('sha256').update(secret).digest()
   }

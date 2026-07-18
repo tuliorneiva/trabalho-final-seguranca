@@ -34,8 +34,15 @@ export class StepUpMfaGuard implements CanActivate {
       throw new UnauthorizedException({ code: 'MFA_INVALID', message: 'Código MFA inválido.' })
     }
 
-    user.lastTotpStep = timeStep
-    await this.users.save(user)
+    const result = await this.users
+      .createQueryBuilder()
+      .update(User)
+      .set({ lastTotpStep: timeStep })
+      .where('id = :id AND (lastTotpStep IS NULL OR lastTotpStep < :timeStep)', { id: user.id, timeStep })
+      .execute()
+    if (result.affected !== 1) {
+      throw new UnauthorizedException({ code: 'MFA_INVALID', message: 'Código MFA inválido.' })
+    }
     return true
   }
 }

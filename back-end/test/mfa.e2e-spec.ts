@@ -61,4 +61,11 @@ describe('MFA (e2e)', () => {
       .send({ code: '000000' })
       .expect(400)
   })
+
+  it('rejects generate once MFA is already enabled', async () => {
+    await request(app.getHttpServer())
+      .post('/mfa/generate')
+      .set('Authorization', `Bearer ${token}`)
+      .expect(403)
+  })
 })
