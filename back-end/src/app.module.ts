@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { HealthController } from './health.controller'
 import { AuthModule } from './auth/auth.module'
 import { MfaModule } from './mfa/mfa.module'
+import { ClientesModule } from './clientes/clientes.module'
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { MfaModule } from './mfa/mfa.module'
     }),
     AuthModule,
     MfaModule,
+    ClientesModule,
   ],
   controllers: [HealthController],
 })
