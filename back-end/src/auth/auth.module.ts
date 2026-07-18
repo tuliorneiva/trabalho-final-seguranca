@@ -12,9 +12,14 @@ import { requireSecret } from '../common/config/secrets'
   imports: [
     TypeOrmModule.forFeature([User]),
     PassportModule,
-    JwtModule.register({
-      secret: requireSecret('JWT_SECRET', 'test-insecure-jwt-secret'),
-      signOptions: { expiresIn: '1d' },
+    // registerAsync (lazy): o secret é resolvido no init do DI, DEPOIS que o
+    // ConfigModule carregou o .env — mantendo assinatura e verificação (JwtStrategy)
+    // usando exatamente o mesmo JWT_SECRET.
+    JwtModule.registerAsync({
+      useFactory: () => ({
+        secret: requireSecret('JWT_SECRET', 'test-insecure-jwt-secret'),
+        signOptions: { expiresIn: '1d' },
+      }),
     }),
   ],
   controllers: [AuthController],
