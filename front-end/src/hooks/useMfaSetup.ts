@@ -19,6 +19,7 @@ export interface UseMfaSetupReturn {
   success: boolean
   generateSecret: () => Promise<void>
   activateMfa: () => Promise<void>
+  reset: () => void
 }
 
 export function useMfaSetup(): UseMfaSetupReturn {
@@ -69,6 +70,18 @@ export function useMfaSetup(): UseMfaSetupReturn {
     }
   }, [code, setMfaEnabled])
 
+  // Volta o formulário ao estado inicial (ex.: após desativar o MFA), evitando
+  // mostrar QR/secret e o "sucesso" de uma configuração anterior.
+  const reset = useCallback(() => {
+    setQrCodeUrl(null)
+    setSecret(null)
+    setCode('')
+    setLoading(false)
+    setActivating(false)
+    setError(null)
+    setSuccess(false)
+  }, [])
+
   return {
     qrCodeUrl,
     secret,
@@ -80,5 +93,6 @@ export function useMfaSetup(): UseMfaSetupReturn {
     success,
     generateSecret,
     activateMfa,
+    reset,
   }
 }

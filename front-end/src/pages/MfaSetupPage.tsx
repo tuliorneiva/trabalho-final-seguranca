@@ -39,6 +39,7 @@ export function MfaSetupPage() {
     setDisabling(true)
     try {
       await disableMfa(code)
+      mfaSetup.reset() // limpa QR/secret/sucesso da configuração anterior
       setMfaEnabled(false)
       showToast('MFA desativado. Você pode configurá-lo novamente quando quiser.', 'success')
     } catch (err: unknown) {
