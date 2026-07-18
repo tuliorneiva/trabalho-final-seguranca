@@ -7,7 +7,7 @@ import apiClient from './axios'
 import type { Cliente } from '../types'
 
 // ---- MOCK: Simula resposta da API enquanto o backend não está disponível ----
-const USE_MOCK = true
+const USE_MOCK = false
 
 const MOCK_CLIENTES: Cliente[] = [
   { id: 1, nome: 'Ana Beatriz Costa',      email: 'ana.costa@empresa.com',    status: 'Ativo' },

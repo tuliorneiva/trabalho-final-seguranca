@@ -4,7 +4,8 @@
 // =============================================================================
 
 import { useLocation } from 'react-router-dom'
-import { Bell, ShieldCheck } from 'lucide-react'
+import { Bell, ShieldCheck, ShieldAlert } from 'lucide-react'
+import { useAuth } from '../../contexts/AuthContext'
 import styles from './Header.module.css'
 
 const pageTitles: Record<string, { title: string; subtitle: string }> = {
@@ -15,6 +16,8 @@ const pageTitles: Record<string, { title: string; subtitle: string }> = {
 
 export function Header() {
   const { pathname } = useLocation()
+  const { user } = useAuth()
+  const mfaOn = !!user?.mfaEnabled
   const page = pageTitles[pathname] ?? { title: 'Mini CRM', subtitle: '' }
 
   return (
@@ -29,10 +32,13 @@ export function Header() {
 
       {/* Ações do header */}
       <div className={styles.actions}>
-        {/* Badge de segurança */}
-        <div className={styles.securityBadge} title="Step-up MFA ativo">
-          <ShieldCheck size={14} />
-          <span>MFA Protegido</span>
+        {/* Badge de segurança — reflete o estado real do MFA da conta */}
+        <div
+          className={`${styles.securityBadge} ${mfaOn ? '' : styles.securityBadgeOff}`}
+          title={mfaOn ? 'Step-up MFA ativo' : 'MFA não configurado nesta conta'}
+        >
+          {mfaOn ? <ShieldCheck size={14} /> : <ShieldAlert size={14} />}
+          <span>{mfaOn ? 'MFA Protegido' : 'MFA Inativo'}</span>
         </div>
 
         {/* Notificações */}

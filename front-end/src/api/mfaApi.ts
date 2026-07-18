@@ -7,7 +7,7 @@ import apiClient from './axios'
 import type { MfaGenerateResponse } from '../types'
 
 // ---- MOCK: Simula resposta da API enquanto o backend não está disponível ----
-const USE_MOCK = true
+const USE_MOCK = false
 
 const MOCK_MFA_RESPONSE: MfaGenerateResponse = {
   secret: 'JBSWY3DPEHPK3PXP',
@@ -44,6 +44,20 @@ export async function enableMfa(code: string): Promise<void> {
     return
   }
   await apiClient.post('/mfa/enable', { code })
+}
+
+/**
+ * Desativa o MFA do usuário atual. Ação crítica: exige um código TOTP válido
+ * enviado no header x-mfa-code (step-up), igual à exclusão de clientes.
+ * POST /mfa/disable
+ * @throws AxiosError 401 com code MFA_REQUIRED | MFA_INVALID
+ */
+export async function disableMfa(code: string): Promise<void> {
+  // Corpo vazio {} (não `null`): com Content-Type application/json, `null` é
+  // serializado como a string "null" e o body-parser do backend rejeita (400).
+  await apiClient.post('/mfa/disable', {}, {
+    headers: { 'x-mfa-code': code },
+  })
 }
 
 // Helper para simular latência de rede

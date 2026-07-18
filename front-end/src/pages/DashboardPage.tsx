@@ -7,20 +7,25 @@ import { Link } from 'react-router-dom'
 import {
   Users,
   ShieldCheck,
+  ShieldAlert,
   ArrowRight,
   TrendingUp,
   Lock,
 } from 'lucide-react'
+import { useAuth } from '../contexts/AuthContext'
 import styles from './DashboardPage.module.css'
 
 export function DashboardPage() {
+  const { user } = useAuth()
+  const mfaOn = !!user?.mfaEnabled
+
   return (
     <div className={styles.page}>
       {/* Hero */}
       <div className={styles.hero}>
-        <div className={styles.heroBadge}>
-          <ShieldCheck size={14} />
-          Step-up Authentication Ativo
+        <div className={`${styles.heroBadge} ${mfaOn ? '' : styles.heroBadgeOff}`}>
+          {mfaOn ? <ShieldCheck size={14} /> : <ShieldAlert size={14} />}
+          {mfaOn ? 'Step-up Authentication Ativo' : 'Step-up Authentication Inativo'}
         </div>
         <h1 className={styles.heroTitle}>
           Bem-vindo ao <span className={styles.highlight}>Mini CRM</span>
