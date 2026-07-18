@@ -7,9 +7,11 @@
 import { ShieldCheck, Info } from 'lucide-react'
 import { MfaSetupCard } from '../components/mfa/MfaSetupCard'
 import { useMfaSetup } from '../hooks/useMfaSetup'
+import { useAuth } from '../contexts/AuthContext'
 import styles from './MfaSetupPage.module.css'
 
 export function MfaSetupPage() {
+  const { user } = useAuth()
   const mfaSetup = useMfaSetup()
 
   return (
@@ -32,8 +34,25 @@ export function MfaSetupPage() {
         </div>
       </div>
 
-      {/* Card de setup (dumb component) */}
-      <MfaSetupCard {...mfaSetup} />
+      {/* Estado: MFA já ativo (evita reenviar POST /mfa/generate e receber 403) */}
+      {user?.mfaEnabled ? (
+        <section className={`card ${styles.activeState}`} role="status" id="mfa-already-active">
+          <div className={styles.activeIcon}>
+            <ShieldCheck size={28} />
+          </div>
+          <div>
+            <h2 className={styles.activeTitle}>MFA já está ativo</h2>
+            <p className={styles.activeDesc}>
+              Sua conta já está protegida com autenticação em dois fatores. O
+              código do Google Authenticator será solicitado sempre que você
+              executar ações críticas, como a exclusão de clientes.
+            </p>
+          </div>
+        </section>
+      ) : (
+        /* Card de setup (dumb component) */
+        <MfaSetupCard {...mfaSetup} />
+      )}
     </div>
   )
 }

@@ -50,3 +50,38 @@
   white-space: nowrap;
   flex-shrink: 0;
 }
+
+/* Estado: MFA já ativo */
+.activeState {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  max-width: 640px;
+  animation: fadeIn 0.35s ease both;
+}
+
+.activeIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.activeTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.2px;
+  margin-bottom: var(--space-1);
+}
+
+.activeDesc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
