@@ -1,5 +1,6 @@
-import { Controller, Get, UseGuards } from '@nestjs/common'
+import { Controller, Delete, Get, HttpCode, Param, UseGuards } from '@nestjs/common'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
+import { StepUpMfaGuard } from '../mfa/step-up-mfa.guard'
 import { ClientesService } from './clientes.service'
 
 @Controller('clientes')
@@ -10,5 +11,13 @@ export class ClientesController {
   @Get()
   findAll() {
     return this.clientes.findAll()
+  }
+
+  @Delete(':id')
+  @UseGuards(StepUpMfaGuard)
+  @HttpCode(200)
+  async remove(@Param('id') id: string) {
+    await this.clientes.remove(id)
+    return { success: true }
   }
 }
