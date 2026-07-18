@@ -1,7 +1,8 @@
-Mini CRM 
+# Mini CRM 
 
-Estrutura de Arquivos
+## Estrutura de Arquivos
 
+```text
 front-end/src/
 ├── api/
 │   ├── axios.ts          # Instância Axios + interceptor Bearer token
@@ -27,8 +28,11 @@ front-end/src/
 │   └── MfaSetupPage      # Setup Google Authenticator
 │
 └── types/index.ts        # Interfaces TypeScript centralizadas
-Fluxo Step-up MFA implementado
+```
 
+## Fluxo Step-up MFA implementado
+
+```text
 Usuário clica "Excluir"
     │
     ▼
@@ -48,31 +52,48 @@ DELETE /clientes/:id + header x-mfa-code
    │          │
  Remove       Toast de erro
  da lista     (modal já fechou)
-Princípios SOLID aplicados
-Princípio	Como foi aplicado
-S	api/ = HTTP apenas; hooks = lógica; components = render
-O	Modal.tsx extensível sem modificação (children genéricos)
-L	Componentes ui/ são substituíveis por qualquer similar
-I	clientesApi.ts e mfaApi.ts expõem só seu domínio
-D	Hooks dependem das abstrações api/, não de fetch direto
-Como executar
-bash
+```
 
+## Princípios SOLID aplicados
+
+| Princípio | Como foi aplicado |
+| :--- | :--- |
+| **S** | `api/` = HTTP apenas; `hooks` = lógica; `components` = render |
+| **O** | `Modal.tsx` extensível sem modificação (`children` genéricos) |
+| **L** | Componentes `ui/` são substituíveis por qualquer similar |
+| **I** | `clientesApi.ts` e `mfaApi.ts` expõem só seu domínio |
+| **D** | Hooks dependem das abstrações `api/`, não de fetch direto |
+
+## Como executar
+
+```bash
 cd front-end
+
+# Instale as dependência
+npm install
+
 # Desenvolvimento
 npm run dev        # http://localhost:5173/
+
 # Build de produção
 npm run build      # Gera dist/
+
 # Deploy Vercel
 # Defina VITE_API_URL nas Environment Variables do projeto
-Para conectar ao backend real
-Renomeie .env.example para .env.local
-Defina VITE_API_URL=http://seu-backend.com
-Nos arquivos src/api/clientesApi.ts e src/api/mfaApi.ts, mude const USE_MOCK = false
-As chamadas passarão a usar o backend real com todos os headers corretos
-TIP
+```
 
-O Axios interceptor já injeta Authorization: Bearer <token> em TODAS as requisições automaticamente. O x-mfa-code é passado como header extra no deleteCliente(id, mfaCode).
+## Para conectar ao backend real
+
+1. Renomeie `.env.example` para `.env.local`
+2. Defina `VITE_API_URL=http://seu-backend.com`
+3. Nos arquivos `src/api/clientesApi.ts` e `src/api/mfaApi.ts`, mude `const USE_MOCK = false`
+
+As chamadas passarão a usar o backend real com todos os headers corretos.
+
+> **TIP**
+> O Axios interceptor já injeta `Authorization: Bearer <token>` em TODAS as requisições automaticamente. O `x-mfa-code` é passado como header extra no `deleteCliente(id, mfaCode)`.
+
+---
 
 # React + TypeScript + Vite
 
