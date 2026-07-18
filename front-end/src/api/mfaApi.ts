@@ -53,7 +53,9 @@ export async function enableMfa(code: string): Promise<void> {
  * @throws AxiosError 401 com code MFA_REQUIRED | MFA_INVALID
  */
 export async function disableMfa(code: string): Promise<void> {
-  await apiClient.post('/mfa/disable', null, {
+  // Corpo vazio {} (não `null`): com Content-Type application/json, `null` é
+  // serializado como a string "null" e o body-parser do backend rejeita (400).
+  await apiClient.post('/mfa/disable', {}, {
     headers: { 'x-mfa-code': code },
   })
 }
