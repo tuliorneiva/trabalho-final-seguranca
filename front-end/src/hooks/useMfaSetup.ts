@@ -6,6 +6,7 @@
 
 import { useState, useCallback } from 'react'
 import { generateMfaSecret, enableMfa } from '../api/mfaApi'
+import { useAuth } from '../contexts/AuthContext'
 
 export interface UseMfaSetupReturn {
   qrCodeUrl: string | null
@@ -28,6 +29,8 @@ export function useMfaSetup(): UseMfaSetupReturn {
   const [activating, setActivating] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
+
+  const { setMfaEnabled } = useAuth()
 
   // ---- Gera o QR Code e o secret ----
   const generateSecret = useCallback(async () => {
@@ -56,6 +59,7 @@ export function useMfaSetup(): UseMfaSetupReturn {
     try {
       await enableMfa(code)
       setSuccess(true)
+      setMfaEnabled(true)
       setCode('')
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Código inválido. Verifique e tente novamente.'

@@ -7,7 +7,7 @@ import apiClient from './axios'
 import type { MfaGenerateResponse } from '../types'
 
 // ---- MOCK: Simula resposta da API enquanto o backend não está disponível ----
-const USE_MOCK = true
+const USE_MOCK = false
 
 const MOCK_MFA_RESPONSE: MfaGenerateResponse = {
   secret: 'JBSWY3DPEHPK3PXP',
