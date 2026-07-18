@@ -68,4 +68,35 @@ describe('MFA (e2e)', () => {
       .set('Authorization', `Bearer ${token}`)
       .expect(403)
   })
+
+  it('rejects disable without x-mfa-code (MFA_REQUIRED)', async () => {
+    const res = await request(app.getHttpServer())
+      .post('/mfa/disable')
+      .set('Authorization', `Bearer ${token}`)
+      .expect(401)
+    expect(res.body.code).toBe('MFA_REQUIRED')
+  })
+
+  it('rejects disable with an invalid code (MFA_INVALID)', async () => {
+    const res = await request(app.getHttpServer())
+      .post('/mfa/disable')
+      .set('Authorization', `Bearer ${token}`)
+      .set('x-mfa-code', '000000')
+      .expect(401)
+    expect(res.body.code).toBe('MFA_INVALID')
+  })
+
+  it('disables MFA with a valid code, then allows generate again', async () => {
+    await request(app.getHttpServer())
+      .post('/mfa/disable')
+      .set('Authorization', `Bearer ${token}`)
+      .set('x-mfa-code', authenticator.generate(secret))
+      .expect(200)
+
+    // Com o MFA desativado, /mfa/generate volta a funcionar (não é mais 403).
+    await request(app.getHttpServer())
+      .post('/mfa/generate')
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200)
+  })
 })

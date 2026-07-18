@@ -33,4 +33,17 @@ export class MfaService {
     await this.users.save(user)
     return { enabled: true }
   }
+
+  /**
+   * Desativa o MFA e limpa o segredo. Ação crítica: protegida por StepUpMfaGuard
+   * no controller (exige um código TOTP válido), então quem chega aqui já provou
+   * a posse do 2º fator.
+   */
+  async disable(user: User) {
+    user.totpSecret = null
+    user.isMfaEnabled = false
+    user.lastTotpStep = null
+    await this.users.save(user)
+    return { enabled: false }
+  }
 }
